@@ -124,7 +124,7 @@ Para ejecutar toda la suite de pruebas:
 
 ### Contrato OpenAPI 3.0 / Swagger
 El archivo de especificación en formato YAML se encuentra disponible en la raíz del proyecto para importar en editor.swagger.io o Swagger UI.
-
+Además, para acceder al entorno visual de la documentación: http://localhost:8080/swagger-ui/index.html
 #### Endpoint Principal
 `GET /bcnc/api/v1/prices`
 

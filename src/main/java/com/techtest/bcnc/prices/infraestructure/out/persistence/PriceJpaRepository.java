@@ -9,14 +9,9 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 
 public interface PriceJpaRepository extends JpaRepository<PriceEntity, Long> {
-    @Query(value = """
-        SELECT * FROM PRICES
-        WHERE BRAND_ID = :brandId
-          AND PRODUCT_ID = :productId
-          AND :applicationDate BETWEEN START_DATE AND END_DATE
-        ORDER BY PRIORITY DESC
-        LIMIT 1
-    """, nativeQuery = true)
+    @Query("SELECT p FROM PriceEntity p WHERE p.brandId = :brandId AND p.productId = :productId " +
+            "AND :applicationDate BETWEEN p.startDate AND p.endDate " +
+            "ORDER BY p.priority DESC  LIMIT 1")
     Optional<PriceEntity> findApplicablePrice(
             @Param("applicationDate") LocalDateTime applicationDate,
             @Param("productId") Long productId,
