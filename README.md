@@ -145,7 +145,8 @@ El archivo de especificación en formato YAML se encuentra disponible en la raí
 ```
 
 #### Colección de Postman
-El proyecto includes el archivo `BCNC Test.postman_collection.json` listo para ser importado en Postman.
+El proyecto incluye el archivo `BCNC Test.postman_collection.json` listo para ser importado en Postman.
+
 
 ---
 

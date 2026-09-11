@@ -1,0 +1,104 @@
+openapi: 3.0.3
+info:
+  title: BCNC Test API
+  description: API para consulta de precios según producto, cadena y fecha.
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080/bcnc/api/v1
+    description: Servidor Local
+
+paths:
+  /prices:
+    get:
+      summary: Obtener el precio aplicable
+      operationId: getPrice
+      parameters:
+        - name: date
+          in: query
+          description: Fecha y hora de aplicación en formato ISO (YYYY-MM-DDTHH:mm:ss)
+          required: true
+          schema:
+            type: string
+            format: date-time
+          example: "2020-06-16T21:00:00"
+        - name: productId
+          in: query
+          description: Identificador del producto
+          required: true
+          schema:
+            type: integer
+            format: int64
+          example: 35455
+        - name: brandId
+          in: query
+          description: Identificador de la cadena / marca
+          required: true
+          schema:
+            type: integer
+            format: int64
+          example: 1
+      responses:
+        '200':
+          description: Precio encontrado exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PriceResponse'
+        '500':
+          description: Error interno al no encontrar el precio
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+components:
+  schemas:
+    PriceResponse:
+      type: object
+      properties:
+        productId:
+          type: integer
+          format: int64
+          example: 35455
+        brandId:
+          type: integer
+          format: int64
+          example: 1
+        priceList:
+          type: integer
+          example: 4
+        startDate:
+          type: string
+          format: date-time
+          example: "2020-06-15T16:00:00"
+        endDate:
+          type: string
+          format: date-time
+          example: "2020-12-31T23:59:59"
+        price:
+          type: number
+          format: double
+          example: 38.95
+
+    ErrorResponse:
+      type: object
+      properties:
+        timestamp:
+          type: string
+          format: date-time
+          example: "2026-09-10T23:40:02.639Z"
+        status:
+          type: integer
+          example: 500
+        error:
+          type: string
+          example: "Internal Server Error"
+        trace:
+          type: string
+          example: "com.techtest.bcnc.prices.domain.exceptons.PriceNotFoundException: No se encontró el precio con los parametros proporcionados :(\r\n\tat com.techtest.bcnc.prices.application.services.PriceService..."
+        message:
+          type: string
+          example: "No se encontró el precio con los parametros proporcionados :("
+        path:
+          type: string
+          example: "/bcnc/api/v1/prices"
