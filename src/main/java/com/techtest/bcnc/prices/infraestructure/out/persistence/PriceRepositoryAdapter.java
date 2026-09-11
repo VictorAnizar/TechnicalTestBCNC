@@ -14,11 +14,15 @@ import java.util.Optional;
 @Component
 public class PriceRepositoryAdapter implements PriceRepositoryPort {
 
-    @Autowired
-    PriceJpaRepository priceJpaRepository;
+    private final PriceJpaRepository priceJpaRepository;
 
-    @Autowired
-    PricePersistenceMapper pricePersistenceMapper;
+    private final PricePersistenceMapper pricePersistenceMapper;
+
+    public PriceRepositoryAdapter(PriceJpaRepository priceJpaRepository, PricePersistenceMapper pricePersistenceMapper){
+        this.priceJpaRepository=priceJpaRepository;
+        this.pricePersistenceMapper=pricePersistenceMapper;
+    }
+
 
     @Override
     public Optional<Price> findPrice(LocalDateTime applicationDate, Long productId, Long brandId) {

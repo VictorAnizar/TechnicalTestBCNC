@@ -11,8 +11,11 @@ import java.time.LocalDateTime;
 @Service
 public class PriceService implements GetPriceUseCase {
 
-    @Autowired
-    PriceRepositoryPort priceRepositoryPort;
+    private final PriceRepositoryPort priceRepositoryPort;
+
+    public PriceService(PriceRepositoryPort priceRepositoryPort){
+        this.priceRepositoryPort=priceRepositoryPort;
+    }
 
     @Override
     public Price getApplicablePrice(LocalDateTime applicationDate, Long productId, Long brandId) {

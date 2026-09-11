@@ -1,18 +1,14 @@
 package com.techtest.bcnc.prices.domain.models;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.time.LocalDateTime;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
 @Builder
+@Getter
+@AllArgsConstructor
 public class Price{
     private Long brandId;
     private LocalDateTime startDate;
@@ -22,4 +18,5 @@ public class Price{
     private Integer priority;
     private BigDecimal price;
     private String currency;
+
 }

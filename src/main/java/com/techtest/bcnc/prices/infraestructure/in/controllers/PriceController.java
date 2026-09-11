@@ -5,6 +5,7 @@ import com.techtest.bcnc.prices.domain.models.Price;
 import com.techtest.bcnc.prices.infraestructure.in.dto.PriceResponse;
 import com.techtest.bcnc.prices.infraestructure.in.mapper.PriceMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,15 +18,18 @@ import java.time.LocalDateTime;
 @RequestMapping("/bcnc/api/v1/prices")
 public class PriceController {
 
-    @Autowired
-    GetPriceUseCase getPriceUseCase;
+    private final GetPriceUseCase getPriceUseCase;
 
-    @Autowired
-    PriceMapper mapper;
+    private final PriceMapper mapper;
+
+    public PriceController(GetPriceUseCase getPriceUseCase, PriceMapper mapper){
+        this.getPriceUseCase=getPriceUseCase;
+        this.mapper=mapper;
+    }
 
     @GetMapping
     public ResponseEntity<PriceResponse> getPrice(
-            @RequestParam("date") LocalDateTime fechaAplicacion,
+            @RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime fechaAplicacion,
             @RequestParam("productId") Long idProd,
             @RequestParam("brandId")Long idBrand){
         Price price = getPriceUseCase.getApplicablePrice(fechaAplicacion, idProd, idBrand);
