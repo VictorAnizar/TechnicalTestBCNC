@@ -47,9 +47,13 @@ El proyecto está estructurado bajo **Arquitectura Hexagonal** y organizado medi
              |--> in/
              |  ├--> controllers/
              |  ├--> dto/
+             |  ├--> exceptions/
              |  |--> mapper/
              |--> out/
                 |--> persistence/
+                |       ├--> entities/
+                |       ├--> mapper/
+
 
 ---
 
@@ -68,16 +72,34 @@ El proyecto está estructurado bajo **Arquitectura Hexagonal** y organizado medi
    2. **Configuración de Base de Datos H2 (`application.properties`):**
       La base de datos se ejecuta en memoria y se inicializa automáticamente al arrancar con las tablas y registros requeridos (`table.sql` e `import.sql`):
       ```
+      server.port=8080
+      server.servlet.context-path=/
       spring.application.name=bcnc
+      
+      #H2 config
       spring.datasource.url=jdbc:h2:mem:prices;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
       spring.datasource.driverClassName=org.h2.Driver
       spring.datasource.username=sa
       spring.datasource.password=
       spring.h2.console.enabled=true
+      
       spring.jpa.database-platform=org.hibernate.dialect.H2Dialect
       spring.jpa.hibernate.ddl-auto=create-drop
+      spring.jpa.show-sql=false
+      spring.jpa.open-in-view=false
       spring.jpa.defer-datasource-initialization=true
       spring.sql.init.mode=always
+      
+      #Logs config
+      logging.level.root=INFO
+      logging.level.com.techtest.bcnc.prices=DEBUG
+      logging.level.org.hibernate.SQL=WARN
+      logging.pattern.console=%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n
+
+      #openApi config
+      springdoc.api-docs.path=/v3/api-docs
+      springdoc.swagger-ui.path=/swagger-ui.html
+      springdoc.swagger-ui.operations-sorter=method
       ```
 
 ---
